@@ -1,0 +1,39 @@
+ORG 00H
+SJMP MAIN
+ORG 03H
+JMP LOOP
+ORG 13H
+JMP LOOP1
+
+MAIN:
+     CLR TCON.2
+     CLR TCON.0
+     MOV IE,#85H
+     MOV P1,#0EH
+START:
+      CLR C
+      MOV A,#0FFH
+      MOV R0,#08H
+      MOV P0,#00H
+      SJMP START
+LOOP:
+     RRC A
+     MOV P0,A
+     CALL DELAY
+     DJNZ R0,LOOP
+     RETI
+LOOP1:
+      RLC A
+      MOV P0,A
+      CALL DELAY
+      DJNZ R0,LOOP1
+      RETI
+DELAY:
+      D1:MOV R4,#200
+      D2:MOV R5,#248
+         DJNZ R5,$
+         DJNZ R4,D2
+      RET
+
+END
+
